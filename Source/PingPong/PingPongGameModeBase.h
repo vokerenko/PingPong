@@ -14,6 +14,6 @@ class PINGPONG_API APingPongGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
-	AActor* ChoosePlayerStart(AController* Player);
+	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
 	
 };

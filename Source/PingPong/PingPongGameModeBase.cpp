@@ -4,21 +4,24 @@
 #include "PingPongGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerStart.h"
+#include "Logging/LogMacros.h"
 
-	AActor* APingPongGameModeBase::ChoosePlayerStart(AController* Player)
+
+AActor* APingPongGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
+{
+	TArray<AActor*> FoundStarts;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), FoundStarts);
+	for (AActor*& Actor : FoundStarts)
 	{
-		TArray<AActor*> FoundStarts;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), FoundStarts);
-		for (AActor* Actor : FoundStarts)
+		if (APlayerStart* PlayerStart = Cast<APlayerStart>(Actor))
 		{
-			if (APlayerStart* PlayerStart = Cast<APlayerStart>(Actor))
+			if (PlayerStart->PlayerStartTag != "Taken")
 			{
-				if (PlayerStart->PlayerStartTag != "Taken")
-				{
-					PlayerStart->PlayerStartTag = "Taken";
-					return PlayerStart;
-				}
+				PlayerStart->PlayerStartTag = "Taken";
+				return PlayerStart;
 			}
 		}
-		return Super::ChoosePlayerStart(Player);
 	}
+
+	return AGameModeBase::ChoosePlayerStart(Player);
+}
