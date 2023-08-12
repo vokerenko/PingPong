@@ -13,5 +13,7 @@ UCLASS()
 class PINGPONG_API APingPongGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	AActor* ChoosePlayerStart(AController* Player);
 	
 };
