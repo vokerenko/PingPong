@@ -16,10 +16,10 @@ void APingPongGameModeBase::Tick(float DeltaTime)
 	}
 }
 APingPongGameModeBase::APingPongGameModeBase()
-	: Super()
 {
 	BallDestroyedDelegate.BindUFunction(this, "StartSpawnBallTimer");
 }
+
 AActor* APingPongGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 {
 	TArray<AActor*> FoundStarts;
@@ -38,6 +38,7 @@ AActor* APingPongGameModeBase::ChoosePlayerStart_Implementation(AController* Pla
 
 	return AGameModeBase::ChoosePlayerStart(Player);
 }
+
 UFUNCTION()
 void APingPongGameModeBase::StartSpawnBallTimer()
 {
@@ -62,6 +63,8 @@ void APingPongGameModeBase::SpawnBallCallback()
 		bHasSpawnedHUD = true;
 	}
 }
+
+
 void APingPongGameModeBase::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
