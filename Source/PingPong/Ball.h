@@ -28,8 +28,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	/*
+	* Sets default values of ProjectileMovement and adds delegate
+	*/
 	virtual void OnConstruction(const FTransform& Transform) override;
 
+	/*
+	* Overlap when player scored a goal
+	*/
 	UFUNCTION() 
 	void BeginOverlap(
 	UPrimitiveComponent* OverlappedComponent,
