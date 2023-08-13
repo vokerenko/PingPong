@@ -1,12 +1,17 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-
+#include "PongPlatformController.h"
+#include "GameFramework/PlayerController.h"
 #include "PingPongGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerStart.h"
 #include "Logging/LogMacros.h"
 
-
+APingPongGameModeBase::APingPongGameModeBase()
+	: Super()
+{
+	BallDestroyedDelegate.BindUFunction(this, "StartSpawnBallTimer");
+}
 AActor* APingPongGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 {
 	TArray<AActor*> FoundStarts;
@@ -25,7 +30,30 @@ AActor* APingPongGameModeBase::ChoosePlayerStart_Implementation(AController* Pla
 
 	return AGameModeBase::ChoosePlayerStart(Player);
 }
+UFUNCTION()
+void APingPongGameModeBase::StartSpawnBallTimer()
+{
+	float Duration = 1.0f;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APingPongGameModeBase::SpawnBallCallback, Duration);
+}
 
+void APingPongGameModeBase::SpawnBallCallback()
+{
+	FTransform BallInitialTransform = FTransform(FVector(30.0f, -170.0f, -30.0f));
+	if (AActor* SpawnedBall = GetWorld()->SpawnActor(BallClass, &BallInitialTransform))
+	{
+		Ball = Cast<ABall>(SpawnedBall);
+		Ball->OnDestroyed.Add(BallDestroyedDelegate);
+	}
+	if (!bHasSpawnedHUD)
+	{
+		for (APongPlatformController*& PC : Players)
+		{
+			PC->ClientSetHUD(PongHUDClass);
+		}
+		bHasSpawnedHUD = true;
+	}
+}
 void APingPongGameModeBase::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
@@ -36,11 +64,6 @@ void APingPongGameModeBase::PostLogin(APlayerController* NewPlayer)
 	NumberOfPlayers++;
 	if (NumberOfPlayers == 2)
 	{
-		FTransform BallInitialTransform = FTransform(FVector(30.0f, -170.0f, -30.0f));
-		if (AActor* SpawnedBall = GetWorld()->SpawnActor(BallClass, &BallInitialTransform))
-		{
-			Ball = Cast<ABall>(SpawnedBall);
-		}
-		
+		StartSpawnBallTimer();
 	}
 }

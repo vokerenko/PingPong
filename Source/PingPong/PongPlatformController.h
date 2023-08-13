@@ -13,5 +13,5 @@ UCLASS()
 class PINGPONG_API APongPlatformController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 };
