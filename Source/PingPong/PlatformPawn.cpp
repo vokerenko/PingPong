@@ -25,10 +25,13 @@ void APlatformPawn::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void APlatformPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APlatformPawn::ServerMoveVertical_Implementation(float AxisValue)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	MulticastMoveVertical(AxisValue);
 }
-
+void APlatformPawn::MulticastMoveVertical_Implementation(float AxisValue)
+{
+	FVector Right = GetActorRightVector();
+	FVector Delta = Right * Speed * AxisValue;
+	AddActorWorldOffset(Delta, true);
+}

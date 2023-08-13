@@ -23,8 +23,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION(Server, Reliable)
+	void ServerMoveVertical(float AxisValue);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastMoveVertical(float AxisValue);
 
 	int32 GetScore() const { return Score; };
 	
@@ -34,5 +37,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int32 Score = 0;
+
+	float Speed = 20.0f;
 
 };

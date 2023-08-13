@@ -14,4 +14,9 @@ class PINGPONG_API APongPlatformController : public APlayerController
 {
 	GENERATED_BODY()
 
+public:
+	// Called to bind functionality to input
+	virtual void SetupInputComponent() override;
+
+	void MoveVertical(float AxisValue);
 };
