@@ -7,6 +7,14 @@
 #include "GameFramework/PlayerStart.h"
 #include "Logging/LogMacros.h"
 
+void APingPongGameModeBase::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (NumberOfPlayers == 1)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, DeltaTime, FColor::Blue,  "Waiting for a second player to start the game");
+	}
+}
 APingPongGameModeBase::APingPongGameModeBase()
 	: Super()
 {
@@ -62,6 +70,10 @@ void APingPongGameModeBase::PostLogin(APlayerController* NewPlayer)
 		Players.Add(PC);
 	}
 	NumberOfPlayers++;
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0F, FColor::Blue, 
+		"The player " + FString::FromInt(NumberOfPlayers) + 
+		" has joined a game");
 	if (NumberOfPlayers == 2)
 	{
 		StartSpawnBallTimer();
