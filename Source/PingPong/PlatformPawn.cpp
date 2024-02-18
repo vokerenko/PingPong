@@ -14,8 +14,7 @@ APlatformPawn::APlatformPawn()
 // Called when the game starts or when spawned
 void APlatformPawn::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();	
 }
 
 // Called every frame
