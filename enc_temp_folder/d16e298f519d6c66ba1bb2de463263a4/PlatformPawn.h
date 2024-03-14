@@ -42,10 +42,4 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<class UBoxComponent> CollisionComponent;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<class UCameraComponent> CameraComponent;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TObjectPtr<class USpringArmComponent> SpringArmComponent;
-
 };
