@@ -13,5 +13,15 @@ UCLASS()
 class PINGPONG_API APlatformPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+public:
+	virtual void SetupInputComponent() override;
+
+	virtual void BindActions(class UInputMappingContext* Context);
+protected:
+	UFUNCTION()
+	void RightMovementAction(const FInputActionValue& Value);
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")
+	TSoftObjectPtr<UInputMappingContext> DefaultInputMappingContext = nullptr;
 };
