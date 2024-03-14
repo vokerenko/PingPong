@@ -29,6 +29,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void RightMovementAction(float Value);
 
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "Input")
+	void ServerSetNewLocation(const FVector& Location);
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<class UPawnMovementComponent> MovementComponent;

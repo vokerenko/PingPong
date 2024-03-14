@@ -19,7 +19,7 @@ public:
 	virtual void BindActions(class UInputMappingContext* Context);
 protected:
 	UFUNCTION()
-	void RightMovementAction(const FInputActionValue& Value);
+	void RightMovementAction(const FInputActionValue& Value) const;
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Input")

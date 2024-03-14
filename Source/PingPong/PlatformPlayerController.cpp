@@ -58,9 +58,8 @@ void APlatformPlayerController::BindActions(UInputMappingContext* Context)
 }
 
 
-void APlatformPlayerController::RightMovementAction(const FInputActionValue& Value)
+void APlatformPlayerController::RightMovementAction(const FInputActionValue& Value) const
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("RightMovement"));
 	if (APawn* MyPawn = GetPawn())
 	{
 		if (APlatformPawn* Platform = Cast<APlatformPawn>(MyPawn))

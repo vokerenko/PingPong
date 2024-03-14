@@ -9,7 +9,8 @@
 // Sets default values
 APlatformPawn::APlatformPawn()
 {
-	bReplicates = true;
+	SetReplicates(true);
+	SetReplicateMovement(true);
 
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -53,6 +54,11 @@ void APlatformPawn::RightMovementAction(float Value)
 	if (Value)
 	{
 		AddMovementInput(GetActorRightVector(), Value);
+		ServerSetNewLocation(GetActorLocation());
 	}
 }
 
+void APlatformPawn::ServerSetNewLocation_Implementation(const FVector& Location)
+{
+	SetActorLocation(Location);
+}
